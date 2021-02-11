@@ -112,6 +112,8 @@ op = OptionParser.new("", 24, '  ') do |opts|
 end
 
 set_no_default_middleware = false
+# ARGV[0]是rack 配置文件，如果没有指定，默认为config.ru
+# ARGV[0] is rack configure file, if not set, default is config.ru
 app = Unicorn.builder(ARGV[0] || 'config.ru', op)
 op = nil
 
@@ -124,5 +126,7 @@ if $DEBUG
   })
 end
 
+# daemonize 是通过-D选项设置的，没有设置则为false
+# daemonize is set by -D option, if not set, the vaule is false, means, next code will not run
 Unicorn::Launcher.daemonize!(options) if rackup_opts[:daemonize]
 Unicorn::HttpServer.new(app, options).start.join
