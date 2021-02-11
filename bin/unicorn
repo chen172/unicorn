@@ -129,4 +129,6 @@ end
 # daemonize 是通过-D选项设置的，没有设置则为false
 # daemonize is set by -D option, if not set, the vaule is false, means, next code will not run
 Unicorn::Launcher.daemonize!(options) if rackup_opts[:daemonize]
+# 根据rack的配置文件config.ru和选项，启动http服务
+# start http server
 Unicorn::HttpServer.new(app, options).start.join
