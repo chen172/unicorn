@@ -4,6 +4,7 @@ require 'unicorn/launcher'
 require 'optparse'
 
 ENV["RACK_ENV"] ||= "development"
+# unicorn服务的配置
 rackup_opts = Unicorn::Configurator::RACKUP
 options = rackup_opts[:options]
 set_no_default_middleware = true
