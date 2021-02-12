@@ -10,6 +10,12 @@ require 'logger'
 # https://yhbt.net/unicorn/examples/nginx.conf
 #
 # See the link:/TUNING.html document for more information on tuning unicorn.
+
+# 实现一个简单的DSL来配置一个unicorn服务
+#
+# 查看unicorn.conf.rb和unicorn.conf.minimal.rb配置文件例子。
+# 和nginx一起使用的配置例子为nginx.conf
+
 class Unicorn::Configurator
   include Unicorn
 
