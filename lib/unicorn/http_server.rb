@@ -9,6 +9,8 @@
 # {source}[https://yhbt.net/unicorn.git/tree/lib/unicorn/http_server.rb]
 # is education for programmers wishing to learn how unicorn works.
 # See Unicorn::Configurator for information on how to configure unicorn.
+# 这是Unicorn的进程管理。
+# 监听套接字在master进程开启，和子进程共享。
 class Unicorn::HttpServer
   # :stopdoc:
   attr_accessor :app, :timeout, :worker_processes,
