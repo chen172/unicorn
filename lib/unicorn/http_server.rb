@@ -67,16 +67,24 @@ class Unicorn::HttpServer
   # port isn't a Number).  Use HttpServer::run to start the server and
   # HttpServer.run.join to join the thread that's processing
   # incoming requests on the socket.
+  # 创建一个工作的服务，在host:port上（如果端口不是一个数字，奇怪的事情会发生）。使用HttpServer::run去开始服务和HttpServer.run.join去加入thread处理到socket的请求。
   def initialize(app, options = {})
+    # unicorn builder的rack app(config.ru)
     @app = app
+    # 请求
     @request = Unicorn::HttpRequest.new
     @reexec_pid = 0
     @default_middleware = true
+    # 选项
     options = options.dup
     @ready_pipe = options.delete(:ready_pipe)
+    # 初始化监听
     @init_listeners = options[:listeners] ? options[:listeners].dup : []
+    # 使用默认选项
     options[:use_defaults] = true
+    # 根据选项进行配置
     self.config = Unicorn::Configurator.new(options)
+    # 监听选项
     self.listener_opts = {}
 
     # We use @self_pipe differently in the master and worker processes:
@@ -88,6 +96,9 @@ class Unicorn::HttpServer
     #
     # * The workers immediately close the pipe they inherit.  See the
     # Unicorn::Worker class for the pipe workers use.
+    # 我们使用@self_pipe来区分master和worker进程
+    #
+    # 这个master进程一旦初始化好了就从不关闭或者重新初始化。在master进程的信号handlers
     @self_pipe = []
     @workers = {} # hash maps PIDs to Workers
     @sig_queue = [] # signal queue used for self-piping
@@ -103,12 +114,19 @@ class Unicorn::HttpServer
     # that case.  Some tests (in and outside of this source tree) and
     # monitoring tools may also rely on pid files existing before we
     # attempt to connect to the listener(s)
+    # 我们首先尝试继承listerners,所以我们以后再绑定它们。
+    # 我们不写pid文件，直到我们bound listeners,防止unicorn错误的启动两次。
+    # 尽管我们的 #pid= 方法检查pid文件失效/存在，race conditions还是会可能的（防止difficult/non-portable)
+    # 添加配置
     config.commit!(self, :skip => [:listeners, :pid])
+    # app
     @orig_app = app
     # list of signals we care about and trap in master.
+    # 列举我们在关系的master进程信号。
     @queue_sigs = [
       :WINCH, :QUIT, :INT, :TERM, :USR1, :USR2, :HUP, :TTIN, :TTOU ]
 
+    # worker进程
     @worker_data = if worker_data = ENV['UNICORN_WORKER']
       worker_data = worker_data.split(',').map!(&:to_i)
       worker_data[1] = worker_data.slice!(1..2).map do |i|
@@ -119,7 +137,9 @@ class Unicorn::HttpServer
   end
 
   # Runs the thing.  Returns self so you can run join on it
+  # 运行things.返回self,所以可以运行join
   def start
+    # 继承listeners!
     inherit_listeners!
     # this pipe is used to wake us up from select(2) in #join when signals
     # are trapped.  See trap_deferred.
