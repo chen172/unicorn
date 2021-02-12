@@ -1,3 +1,4 @@
+# 可以直接给结构体添加字段
 RACKUP = {
   :daemonize => false,
   :host => "127.0.0.1",
