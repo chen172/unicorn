@@ -5,7 +5,9 @@ require 'optparse'
 
 ENV["RACK_ENV"] ||= "development"
 # unicorn服务的配置
+# 使用RACKUP的时候不会调用class的initialize去初始化
 rackup_opts = Unicorn::Configurator::RACKUP
+# 得到options结构体，options里的listener字段一开始初始化为空的
 options = rackup_opts[:options]
 set_no_default_middleware = true
 
@@ -55,6 +57,7 @@ op = OptionParser.new("", 24, '  ') do |opts|
     rackup_opts[:set_listener] = true
   end
 
+  # 设置RACK_ENV这个环境变量
   opts.on("-E", "--env RACK_ENV",
           "use RACK_ENV for defaults (default: development)") do |e|
     ENV["RACK_ENV"] = e
@@ -88,6 +91,7 @@ op = OptionParser.new("", 24, '  ') do |opts|
     options[:listeners] << address
   end
 
+  # 填充options的config_file字段
   opts.on("-c", "--config-file FILE", "Unicorn-specific config file") do |f|
     options[:config_file] = f
   end
