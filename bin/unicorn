@@ -92,6 +92,7 @@ op = OptionParser.new("", 24, '  ') do |opts|
   end
 
   # 填充options的config_file字段
+  # config_file字段是添加的，查看https://github.com/chen172/unicorn/blob/master/my_own_test/test_config_options.rb
   opts.on("-c", "--config-file FILE", "Unicorn-specific config file") do |f|
     options[:config_file] = f
   end
@@ -116,6 +117,7 @@ op = OptionParser.new("", 24, '  ') do |opts|
   opts.parse! ARGV
 end
 
+# 上面的代码就是配置好了options(unicorn的配置文件)
 set_no_default_middleware = false
 # ARGV[0]是rack 配置文件，如果没有指定，默认为config.ru
 # ARGV[0] is rack configure file, if not set, default is config.ru
