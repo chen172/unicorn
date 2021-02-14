@@ -1,3 +1,8 @@
+# TO DO:
+# 如何得到一个HTTP请求
+# unicorn的配置是如何传入的
+# 如何开启服务端的监听
+
 # -*- encoding: binary -*-
 
 # This is the process manager of Unicorn. This manages worker
