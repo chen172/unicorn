@@ -862,6 +862,7 @@ class Unicorn::HttpServer
   def inherit_listeners!
     # inherit sockets from parents, they need to be plain Socket objects
     # before they become Kgio::UNIXServer or Kgio::TCPServer
+    # 继承来自父进程的套接字，在它们成为Kgio::UNIXServer或者Kgio::TCPServer之前，它们需要是普通的Socket对象
     inherited = ENV['UNICORN_FD'].to_s.split(',')
 
     # emulate sd_listen_fds() for systemd
@@ -876,6 +877,7 @@ class Unicorn::HttpServer
       io = Socket.for_fd(fd.to_i)
       io.autoclose = false
       io = server_cast(io)
+      # 设置服务端套接字选项
       set_server_sockopt(io, listener_opts[sock_name(io)])
       logger.info "inherited addr=#{sock_name(io)} fd=#{io.fileno}"
       io
