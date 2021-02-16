@@ -78,6 +78,8 @@ class Unicorn::Configurator
 
     # 如果use_defaults字段为真，就要添加DEFAULTS数组
     set.merge!(DEFAULTS) if @use_defaults
+    # 最后只剩下:listeners => []
+    # 这行代码会初始化监听者的地址，由于监听地址设为空的，所以地址也是空的
     defaults.each { |key, value| self.__send__(key, value) }
     # listener_opts是不是一个Hash数组
     Hash === set[:listener_opts] or
