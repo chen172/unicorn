@@ -90,6 +90,10 @@ class Unicorn::HttpServer
     # 使用默认选项
     options[:use_defaults] = true
     # 根据选项进行配置
+    # options的值：
+    # :listeners => []
+    # :config_file => unicorn.rb
+    # :use_defaults => true
     self.config = Unicorn::Configurator.new(options)
     # 监听选项
     self.listener_opts = {}
