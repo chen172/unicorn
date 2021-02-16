@@ -651,7 +651,10 @@ class Unicorn::HttpServer
 
   # once a client is accepted, it is processed in its entirety here
   # in 3 easy steps: read request, call app, write app response
+  # 一旦一个客户端请求被接受了，将会经过如下3个步骤的处理：
+  # 读请求，调用app, 写app响应
   def process_client(client)
+    # 读请求
     env = @request.read(client)
 
     if early_hints
