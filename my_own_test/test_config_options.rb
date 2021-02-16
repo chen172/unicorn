@@ -14,3 +14,7 @@ puts rackup_opts[:host]
 puts rackup_opts[:test]
 rackup_opts[:test] = "settest"
 puts rackup_opts[:test]
+
+rackup_opts.each do |key, value|
+  puts "#{key}:#{value}"
+end
