@@ -61,6 +61,8 @@ class Unicorn::HttpParser
   # returns an environment hash suitable for Rack if successful
   # This does minimal exception trapping and it is up to the caller
   # to handle any socket errors (e.g. user aborted upload).
+  # IO处理的实现。使用了8种不同的IO处理技术。
+  # 现在非常仔细的构造来确保它在通常的情况下得到最好的性能：GET
   def read(socket)
     clear
     e = env
