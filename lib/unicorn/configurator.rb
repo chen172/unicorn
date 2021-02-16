@@ -92,6 +92,7 @@ class Unicorn::Configurator
     if merge_defaults && @use_defaults
       set.merge!(DEFAULTS) if @use_defaults
     end
+    # 执行config_file里面的配置
     instance_eval(File.read(config_file), config_file) if config_file
 
     parse_rackup_file
