@@ -41,6 +41,7 @@ module Unicorn
   def self.builder(ru, op)
     # allow Configurator to parse cli switches embedded in the ru file
     op = Unicorn::Configurator::RACKUP.merge!(:file => ru, :optparse => op)
+    # 需要Rack::Builder来处理config.ru
     if ru =~ /\.ru$/ && !defined?(Rack::Builder)
       abort "rack and Rack::Builder must be available for processing #{ru}"
     end
