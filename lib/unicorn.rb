@@ -47,6 +47,7 @@ module Unicorn
     end
 
     # always called after config file parsing, may be called after forking
+    # 每次http请求的是时候，才会执行这里的代码
     lambda do |_, server|
       inner_app = case ru
       when /\.ru$/
