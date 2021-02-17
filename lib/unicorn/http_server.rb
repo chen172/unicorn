@@ -665,6 +665,7 @@ class Unicorn::HttpServer
 
     env["rack.after_reply"] = []
 
+    # 请求的内容在env中，调用unicorn.rb的builder方法中的lambda来得到响应
     status, headers, body = @app.call(env)
 
     begin
