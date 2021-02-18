@@ -53,6 +53,7 @@ module Unicorn
       when /\.ru$/
         raw = File.read(ru)
         raw.sub!(/^__END__\n.*/, '')
+        # 执行config.ru里面的代码，每次请求都会重新执行里面的代码
         eval("Rack::Builder.new {(\n#{raw}\n)}.to_app", TOPLEVEL_BINDING, ru)
       else
         require ru
